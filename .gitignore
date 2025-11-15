@@ -1,3 +1,22 @@
-venv
+# Python virtual environments
+venv/
+.venv/
+
+# Environment variables
 .env
-.venv
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE / editor configs (optional, but common)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

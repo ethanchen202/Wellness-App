@@ -1,15 +1,19 @@
 # server.py
+import threading
+from src.posture_engine import run_posture_monitor
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 import random
+import uvicorn
 
 app = FastAPI()
+recording_flag = {"recording": False} 
 
 # Allow Electron frontend to connect
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Can restrict to your app URL
+    allow_origins=["*"],  # restrict in prod
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -39,19 +43,16 @@ blink_manager = ConnectionManager()
 # Shared state
 current_posture = "good"
 current_blink = "not_blinking"
-recording = False
 
 # ----------------- HTTP Endpoints -----------------
 @app.post("/start")
 async def start_recording():
-    global recording
-    recording = True
+    recording_flag["recording"] = True
     return {"status": "recording started"}
 
 @app.post("/stop")
-async def stop_recording():
-    global recording
-    recording = False
+async def stop_recording(): 
+    recording_flag["recording"] = False
     return {"status": "recording stopped"}
 
 # ----------------- WebSocket Endpoints -----------------
@@ -60,7 +61,6 @@ async def ws_posture(websocket: WebSocket):
     await posture_manager.connect(websocket)
     try:
         while True:
-            # Keep connection alive
             await asyncio.sleep(1)
     except WebSocketDisconnect:
         posture_manager.disconnect(websocket)
@@ -74,18 +74,10 @@ async def ws_blink(websocket: WebSocket):
     except WebSocketDisconnect:
         blink_manager.disconnect(websocket)
 
-# ----------------- Background Task -----------------
-async def analysis_loop():
-    global current_posture, current_blink
-    while True:
-        if recording:
-            # Replace these with real video analysis
-            current_posture = random.choice(["good", "bad"])
-            current_blink = random.choice(["blinking", "not_blinking"])
-            await posture_manager.broadcast({"posture": current_posture})
-            await blink_manager.broadcast({"blink": current_blink})
-        await asyncio.sleep(2)  # Adjust for analysis frame rate
+def start_posture_thread():
+    threading.Thread(target=run_posture_monitor, args=(recording_flag,), daemon=True).start()
 
-@app.on_event("startup")
-async def startup_event():
-    asyncio.create_task(analysis_loop())
+# ----------------- Main -----------------
+if __name__ == "__main__":
+    start_posture_thread()
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)

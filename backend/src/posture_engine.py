@@ -1,3 +1,4 @@
+import random
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -104,7 +105,7 @@ def compute_bad_posture_score(metrics):
     return float(np.clip(score, 0.0, 1.0))
 
 
-def main():
+async def run_posture_monitor(posture_manager, blink_manager):
     cap = cv2.VideoCapture(0)  # 0 = default camera
 
     # Optional: lower resolution to reduce CPU usage
@@ -167,6 +168,12 @@ def main():
 
         # Update rolling history
         bad_history.append(bad_posture_score)
+        
+        # send to socket connections
+        current_posture = random.choice(["good", "bad"])
+        current_blink = random.choice(["blinking", "not_blinking"])
+        await posture_manager.broadcast({"posture": current_posture})
+        await blink_manager.broadcast({"blink": current_blink})
 
         # Decide if posture is bad for prolonged period
         avg_score = np.mean(bad_history) if bad_history else 0.0
@@ -205,4 +212,4 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    main()
+    run_posture_monitor()
