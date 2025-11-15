@@ -90,16 +90,16 @@ def compute_bad_posture_score(metrics):
         return (x - good_max) / (bad_max - good_max)
 
     back_bad = norm_bad(back, good_max=8, bad_max=20)
-    neck_bad = norm_bad(neck, good_max=10, bad_max=25)
+    neck_bad = norm_bad(neck, good_max=50, bad_max=80)
     head_bad = norm_bad(abs(head_fwd), good_max=2, bad_max=8)
     tilt_bad = norm_bad(tilt, good_max=5, bad_max=20)
 
     # Weighted sum; you can tune these based on your app’s priorities.
     score = (
-        0.35 * back_bad +
-        0.35 * neck_bad +
-        0.20 * head_bad +
-        0.10 * tilt_bad
+        0.00 * back_bad +
+        1.00 * neck_bad +
+        0.00 * head_bad +
+        0.00 * tilt_bad
     )
     return float(np.clip(score, 0.0, 1.0))
 
@@ -170,7 +170,7 @@ def main():
 
         # Decide if posture is bad for prolonged period
         avg_score = np.mean(bad_history) if bad_history else 0.0
-        is_bad_now = avg_score > 0.6  # tune threshold
+        is_bad_now = avg_score > 0.5  # tune threshold
 
         if is_bad_now:
             cv2.putText(
