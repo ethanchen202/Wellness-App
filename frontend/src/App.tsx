@@ -9,6 +9,9 @@ import Sidebar, { SidebarItem } from "./components/Sidebar";
 import Home from "./components/Home";
 import Analytics from "./components/Analytics";
 import Settings from "./components/Settings";
+import NotificationStack from "./components/Notifications/NotificationStack";
+import PersistentNotificationStack from "./components/Notifications/PersistentNotificationStack";
+import NotificationTestButton from "./components/Notifications/NotificationTestButton";
 
 function App() {
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -36,6 +39,11 @@ function App() {
       <div className="flex w-full h-full bg-gray-400">
         {contentComponents[currentIdx]}
       </div>
+      <NotificationStack />
+      <PersistentNotificationStack />
+
+      {/* Dev only - remove in production */}
+      {process.env.NODE_ENV === "development" && <NotificationTestButton />}
     </div>
   );
 }

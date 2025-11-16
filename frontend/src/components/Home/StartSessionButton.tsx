@@ -13,6 +13,7 @@ export default function StartSessionButton({
   isLoading = false,
   onClick,
 }: StartSessionButtonProps) {
+  console.log(isActive);
   return (
     <button
       onClick={onClick}
@@ -23,10 +24,10 @@ export default function StartSessionButton({
         <>
           <Square
             size={100}
-            className="mb-1 group-hover:scale-110 transition-transform"
+            className="text-axial-400 mb-1 hover:scale-110 transition-transform"
             fill="#5B63A8"
           />
-          <span className="text-body-1 mt-1">Stop</span>
+          <span className="text-body-1 text-axial-400 mt-1">Stop</span>
         </>
       ) : (
         <>
