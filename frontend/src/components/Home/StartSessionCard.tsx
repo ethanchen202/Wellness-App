@@ -68,12 +68,14 @@ export default function StartSessionCard({
             </span>
             <button
               onClick={() => handleToggle(key)}
-              disabled={disabled}
+              disabled={sessionState.isActive}
               className={`
-                relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-200 py-[18px]
-                ${value ? "bg-axial-400" : "bg-gray-300"}
-                ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-              `}
+    relative inline-flex h-8 w-16 items-center rounded-full transition-colors duration-200 py-[18px]
+    ${value ? "bg-axial-400" : "bg-gray-300"}
+    ${
+      sessionState.isActive ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+    }
+  `}
             >
               <span
                 className={`
