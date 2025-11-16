@@ -3,6 +3,7 @@ import mediapipe as mp
 import numpy as np
 import time
 from collections import deque
+from src.utils import wait_for_unpause
 
 mp_face_mesh = mp.solutions.face_mesh
 
@@ -125,3 +126,77 @@ def eye_fatigue_detector():
 
 if __name__ == "__main__":
     eye_fatigue_detector()
+
+# ---------------------------
+# USED FOR WEBSOCKET
+# ---------------------------
+async def run_blink_monitor(recording_flag, blink_manager):
+    cap = cv2.VideoCapture(0)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+    face_mesh = mp_face_mesh.FaceMesh(
+        refine_landmarks=True,
+        max_num_faces=1,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5
+    )
+
+    # EAR threshold & blink detection state
+    EAR_THRESHOLD = 0.23          # Typical threshold
+    EAR_CONSEC_FRAMES = 2         # How many frames to count as blink
+    frame_counter = 0
+    blink_count = 0
+
+    # Rolling history of blink timestamps (60 seconds)
+    blink_times = deque()
+
+    while True:
+        await wait_for_unpause(recording_flag)
+
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        frame = cv2.flip(frame, 1)
+        h, w, _ = frame.shape
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+        results = face_mesh.process(rgb)
+
+        blink_rate = 0
+        display_text = "Face not detected"
+
+        if results.multi_face_landmarks:
+            face = results.multi_face_landmarks[0]
+            lm = face.landmark
+
+            # Compute EAR for both eyes
+            left_EAR = compute_EAR(lm, w, h, LEFT_EYE)
+            right_EAR = compute_EAR(lm, w, h, RIGHT_EYE)
+            EAR = (left_EAR + right_EAR) / 2.0
+
+            # Blink detection
+            if EAR < EAR_THRESHOLD:
+                frame_counter += 1
+            else:
+                if frame_counter >= EAR_CONSEC_FRAMES:
+                    # Genuine blink
+                    t = time.time()
+                    blink_times.append(t)
+                frame_counter = 0
+
+            # Remove timestamps older than 60 seconds
+            now = time.time()
+            while blink_times and now - blink_times[0] > 60:
+                blink_times.popleft()
+
+            # Compute blinks per minute
+            blink_rate = len(blink_times)
+            is_bad_now = blink_rate > 10
+
+            # send to socket connections
+            current_blink = "bad" if is_bad_now else "good"
+            await blink_manager.broadcast({"blink": blink_rate})
+
+    cap.release()

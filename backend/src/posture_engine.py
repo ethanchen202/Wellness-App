@@ -4,6 +4,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from collections import deque
+from src.utils import wait_for_unpause
 import time
 
 mp_drawing = mp.solutions.drawing_utils
@@ -104,13 +105,6 @@ def compute_bad_posture_score(metrics):
         0.00 * tilt_bad
     )
     return float(np.clip(score, 0.0, 1.0))
-
-
-async def wait_for_unpause(recording_flag):
-    while True:
-        if recording_flag["recording"]:
-            return
-        await asyncio.sleep(1)
 
 
 def main():
@@ -220,7 +214,7 @@ if __name__ == "__main__":
 # ---------------------------
 # USED FOR WEBSOCKET
 # ---------------------------
-async def run_posture_monitor(recording_flag, posture_manager, blink_manager):
+async def run_posture_monitor(recording_flag, posture_manager):
     print("monitor loop started")
 
     # while True:
@@ -291,9 +285,9 @@ async def run_posture_monitor(recording_flag, posture_manager, blink_manager):
 
         # send to socket connections
         current_posture = "bad" if is_bad_now else "good"
-        current_blink = random.choice(["blinking", "not_blinking"]) # TODO: implement blink detection
+        # current_blink = random.choice(["blinking", "not_blinking"]) # TODO: implement blink detection
         await posture_manager.broadcast({"posture": current_posture})
-        await blink_manager.broadcast({"blink": current_blink})
+        # await blink_manager.broadcast({"blink": current_blink})
 
     cap.release()
     # cv2.destroyAllWindows()
