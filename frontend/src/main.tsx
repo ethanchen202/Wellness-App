@@ -3,11 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./global.css";
 import { NotificationProvider } from "./context/NotificationContext.tsx";
+import { PersistentNotificationProvider } from "./context/PersistentNotificationContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <NotificationProvider>
-      <App />
+      <PersistentNotificationProvider>
+        <App />
+      </PersistentNotificationProvider>
     </NotificationProvider>
   </React.StrictMode>
 );

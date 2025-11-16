@@ -58,7 +58,11 @@ export class SessionService {
     onError: (error: Event) => void,
     onClose: (event: CloseEvent) => void
   ): WebSocket {
-    const ws = new WebSocket(`${this.WS_URL}`);
+    const ws = new WebSocket(`${this.WS_URL}/current_status`);
+
+    ws.onopen = () => {
+      console.log("WebSocket connected");
+    };
 
     ws.onmessage = (event) => {
       try {
