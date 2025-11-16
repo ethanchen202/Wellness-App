@@ -56,7 +56,7 @@ async def stop_recording():
     return {"status": "recording stopped"}
 
 # ----------------- WebSocket Endpoints -----------------
-@app.websocket("/ws/current_posture")
+@app.websocket("/current_posture")
 async def ws_posture(websocket: WebSocket):
     await posture_manager.connect(websocket)
     try:
@@ -75,9 +75,14 @@ async def ws_blink(websocket: WebSocket):
         blink_manager.disconnect(websocket)
 
 def start_posture_thread():
-    threading.Thread(target=run_posture_monitor, args=(recording_flag,), daemon=True).start()
+    def run():
+        asyncio.run(run_posture_monitor(recording_flag, posture_manager, blink_manager))
 
+    threading.Thread(target=run, daemon=True).start()
+
+@app.on_event("startup")
+async def startup_event():
+    start_posture_thread()
 # ----------------- Main -----------------
 if __name__ == "__main__":
-    start_posture_thread()
-    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
