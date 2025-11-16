@@ -11,6 +11,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "time-to-posture-degradation-day",
           type: "line",
+          dataType: "graph",
           title: "Time to Posture Degradation",
           data: [95, 92, 88, 82, 75, 68, 55],
           yAxisLabel: "",
@@ -25,6 +26,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "duration-of-poor-posture-day",
           type: "bar",
+          dataType: "graph",
           title: "Duration of Poor Posture",
           data: [45, 38, 62, 48, 35, 72, 55],
           yAxisLabel: "",
@@ -43,6 +45,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "time-to-posture-degradation-week",
           type: "line",
+          dataType: "graph",
           title: "Time to Posture Degradation",
           data: [95, 90, 85, 80, 75, 72, 68],
           yAxisLabel: "",
@@ -57,6 +60,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "duration-of-poor-posture-week",
           type: "bar",
+          dataType: "graph",
           title: "Duration of Poor Posture",
           data: [65, 48, 85, 62, 42, 78, 55],
           yAxisLabel: "",
@@ -75,6 +79,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "time-to-posture-degradation-month",
           type: "line",
+          dataType: "graph",
           title: "Time to Posture Degradation",
           data: [92, 85, 75, 65],
           yAxisLabel: "",
@@ -89,6 +94,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "duration-of-poor-posture-month",
           type: "bar",
+          dataType: "graph",
           title: "Duration of Poor Posture",
           data: [72, 65, 58, 68],
           yAxisLabel: "",
@@ -107,6 +113,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "time-to-posture-degradation-year",
           type: "line",
+          dataType: "graph",
           title: "Time to Posture Degradation",
           data: [90, 88, 85, 82, 78, 75, 72, 70, 68, 65, 62, 60],
           yAxisLabel: "",
@@ -121,6 +128,7 @@ export const postureMetrics: AnalyticsMetric = {
         {
           id: "duration-of-poor-posture-year",
           type: "bar",
+          dataType: "graph",
           title: "Duration of Poor Posture",
           data: [75, 72, 68, 65, 62, 58, 55, 60, 62, 65, 68, 72],
           yAxisLabel: "",
@@ -146,6 +154,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "distractions-over-time-day",
           type: "line",
+          dataType: "graph",
           title: "Distractions Over Time",
           data: [125, 118, 110, 98, 85, 72, 58],
           yAxisLabel: "",
@@ -160,6 +169,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "number-of-distractions-day",
           type: "bar",
+          dataType: "graph",
           title: "Number of Distractions",
           data: [82, 56, 105, 78, 64, 95, 72],
           yAxisLabel: "",
@@ -178,6 +188,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "distractions-over-time-week",
           type: "line",
+          dataType: "graph",
           title: "Distractions Over Time",
           data: [128, 115, 105, 95, 82, 70, 58],
           yAxisLabel: "",
@@ -192,6 +203,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "number-of-distractions-week",
           type: "bar",
+          dataType: "graph",
           title: "Number of Distractions",
           data: [72, 48, 92, 68, 55, 82, 62],
           yAxisLabel: "",
@@ -210,6 +222,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "distractions-over-time-month",
           type: "line",
+          dataType: "graph",
           title: "Distractions Over Time",
           data: [125, 110, 92, 75],
           yAxisLabel: "",
@@ -224,6 +237,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "number-of-distractions-month",
           type: "bar",
+          dataType: "graph",
           title: "Number of Distractions",
           data: [98, 75, 88, 82],
           yAxisLabel: "",
@@ -242,6 +256,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "distractions-over-time-year",
           type: "line",
+          dataType: "graph",
           title: "Distractions Over Time",
           data: [120, 118, 115, 112, 108, 105, 102, 100, 98, 95, 92, 90],
           yAxisLabel: "",
@@ -256,6 +271,7 @@ export const distractionsMetrics: AnalyticsMetric = {
         {
           id: "number-of-distractions-year",
           type: "bar",
+          dataType: "graph",
           title: "Number of Distractions",
           data: [115, 108, 102, 98, 95, 92, 90, 88, 92, 95, 100, 105],
           yAxisLabel: "",
@@ -271,6 +287,7 @@ export const distractionsMetrics: AnalyticsMetric = {
   },
 };
 
+// Eye Strain Metrics
 export const eyeStrainMetrics: AnalyticsMetric = {
   averageScore: 88,
   data: {
@@ -280,6 +297,7 @@ export const eyeStrainMetrics: AnalyticsMetric = {
         {
           id: "blink-rate-day",
           type: "line",
+          dataType: "graph",
           title: "Average Blink Rate (blink/min)",
           data: [18, 17, 16, 14, 12, 10, 8],
           yAxisLabel: "Blinks/min",
@@ -288,10 +306,13 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionSuffix: "",
           showGrid: true,
           showPoints: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
         },
         {
           id: "eye-fix-day",
           type: "bar",
+          dataType: "graph",
           title: "Eye Fix Duration",
           data: [38, 32, 42, 40, 35, 48, 43],
           yAxisLabel: "Minutes",
@@ -299,6 +320,8 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionValue: 43,
           descriptionSuffix: "minutes before taking a break",
           showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
         },
       ],
     },
@@ -308,6 +331,7 @@ export const eyeStrainMetrics: AnalyticsMetric = {
         {
           id: "blink-rate-week",
           type: "line",
+          dataType: "graph",
           title: "Average Blink Rate (blink/min)",
           data: [18, 16, 14, 15, 13, 16, 17],
           yAxisLabel: "Blinks/min",
@@ -316,10 +340,13 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionSuffix: "",
           showGrid: true,
           showPoints: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
         },
         {
           id: "eye-fix-week",
           type: "bar",
+          dataType: "graph",
           title: "Eye Fix Duration",
           data: [35, 25, 55, 40, 30, 50, 35],
           yAxisLabel: "Minutes",
@@ -327,6 +354,8 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionValue: 43,
           descriptionSuffix: "minutes before taking a break",
           showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
         },
       ],
     },
@@ -336,6 +365,7 @@ export const eyeStrainMetrics: AnalyticsMetric = {
         {
           id: "blink-rate-month",
           type: "line",
+          dataType: "graph",
           title: "Average Blink Rate (blink/min)",
           data: [18, 16, 14, 12],
           yAxisLabel: "Blinks/min",
@@ -344,10 +374,13 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionSuffix: "",
           showGrid: true,
           showPoints: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
         },
         {
           id: "eye-fix-month",
           type: "bar",
+          dataType: "graph",
           title: "Eye Fix Duration",
           data: [48, 42, 38, 35],
           yAxisLabel: "Minutes",
@@ -355,6 +388,8 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionValue: 41,
           descriptionSuffix: "minutes before taking a break",
           showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
         },
       ],
     },
@@ -364,6 +399,7 @@ export const eyeStrainMetrics: AnalyticsMetric = {
         {
           id: "blink-rate-year",
           type: "line",
+          dataType: "graph",
           title: "Average Blink Rate",
           data: [17, 16, 15, 14, 13, 12, 11, 12, 13, 14, 15, 16],
           yAxisLabel: "Blinks/min",
@@ -372,10 +408,13 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionSuffix: "",
           showGrid: true,
           showPoints: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
         },
         {
           id: "eye-fix-year",
           type: "bar",
+          dataType: "graph",
           title: "Eye Fix Duration",
           data: [50, 48, 45, 42, 40, 38, 36, 35, 37, 40, 43, 46],
           yAxisLabel: "Minutes",
@@ -383,6 +422,136 @@ export const eyeStrainMetrics: AnalyticsMetric = {
           descriptionValue: 42,
           descriptionSuffix: "minutes before taking a break",
           showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
+        },
+      ],
+    },
+  },
+};
+
+// Session Logs Metrics
+export const sessionLogsMetrics: AnalyticsMetric = {
+  averageScore: 67,
+  data: {
+    day: {
+      score: 70,
+      charts: [
+        {
+          id: "number-of-sessions-day",
+          type: "bar",
+          dataType: "graph",
+          title: "Number of Sessions",
+          data: [3, 2, 4, 3, 2, 5, 4],
+          yAxisLabel: "",
+          description: "You've had",
+          descriptionValue: 23,
+          descriptionSuffix: "sessions this week.",
+          showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
+        },
+        {
+          id: "session-details-day",
+          dataType: "image",
+          imagePath:
+            "/Users/timothywei/Code/hackathons/Wellness-App/frontend/src/assets/lol.png",
+          title: "Recent Sessions",
+          description: "View detailed",
+          descriptionValue: "session information",
+          descriptionSuffix: "and metrics",
+          width: 600,
+          height: 280,
+        },
+      ],
+    },
+    week: {
+      score: 67,
+      charts: [
+        {
+          id: "number-of-sessions-week",
+          type: "bar",
+          dataType: "graph",
+          title: "Number of Sessions",
+          data: [3, 2, 4, 3, 2, 5, 4],
+          yAxisLabel: "",
+          description: "You've had",
+          descriptionValue: 23,
+          descriptionSuffix: "sessions this week.",
+          showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
+        },
+        {
+          id: "session-details-week",
+          dataType: "image",
+          imagePath: "/path/to/session-details-week.png",
+          title: "Recent Sessions",
+          description: "View detailed",
+          descriptionValue: "session information",
+          descriptionSuffix: "and metrics",
+          width: 600,
+          height: 280,
+        },
+      ],
+    },
+    month: {
+      score: 64,
+      charts: [
+        {
+          id: "number-of-sessions-month",
+          type: "bar",
+          dataType: "graph",
+          title: "Number of Sessions",
+          data: [16, 14, 18, 15],
+          yAxisLabel: "",
+          description: "You've had",
+          descriptionValue: 63,
+          descriptionSuffix: "sessions this month.",
+          showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
+        },
+        {
+          id: "session-details-month",
+          dataType: "image",
+          imagePath: "/path/to/session-details-month.png",
+          title: "Recent Sessions",
+          description: "View detailed",
+          descriptionValue: "session information",
+          descriptionSuffix: "and metrics",
+          width: 600,
+          height: 280,
+        },
+      ],
+    },
+    year: {
+      score: 60,
+      charts: [
+        {
+          id: "number-of-sessions-year",
+          type: "bar",
+          dataType: "graph",
+          title: "Number of Sessions",
+          data: [62, 58, 71, 65, 60, 68, 75, 72, 68, 70, 76, 80],
+          yAxisLabel: "",
+          description: "You've had",
+          descriptionValue: 825,
+          descriptionSuffix: "sessions this year.",
+          showGrid: false,
+          showXAxisLabel: false,
+          showYAxisLabel: false,
+        },
+        {
+          id: "session-details-year",
+          dataType: "image",
+          imagePath: "/path/to/session-details-year.png",
+          title: "Recent Sessions",
+          description: "View detailed",
+          descriptionValue: "session information",
+          descriptionSuffix: "and metrics",
+          width: 600,
+          height: 280,
         },
       ],
     },

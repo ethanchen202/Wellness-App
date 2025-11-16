@@ -5,26 +5,32 @@ export type TimeRange = "day" | "week" | "month" | "year";
 
 export type ChartType = "line" | "bar";
 
+export type ChartDataType = "graph" | "image";
+
 export interface AnalyticsMetric {
   averageScore: number;
   data: { [key in TimeRange]: TimeRangeData };
 }
 
 export interface TimeRangeData {
-  score: number; // For the circular display
+  score: number;
   charts: ChartData[];
 }
 
-export interface ChartData {
-  id: string; // Unique identifier
-  type: ChartType; // 'line' or 'bar'
+export interface BaseChartData {
+  id: string;
   title: string;
+  description: string;
+  descriptionValue: string | number;
+  descriptionSuffix: string;
+}
+
+export interface GraphChartData extends BaseChartData {
+  type: ChartType; // 'line' or 'bar'
+  dataType: "graph";
   data: number[];
   xAxisLabel?: string;
   yAxisLabel: string;
-  description: string; // Text shown below chart
-  descriptionValue: string | number; // Bold value in description
-  descriptionSuffix: string; // Text after the value
   curveType?: "linear" | "monotoneX" | "natural" | "step";
   showPoints?: boolean;
   showGrid?: boolean;
@@ -34,12 +40,11 @@ export interface ChartData {
   showYAxisLabel?: boolean;
 }
 
-export interface AnalyticsCardProps {
-  title: string;
-  icon: LucideIcon;
-  metrics: AnalyticsMetric;
-  getXAxisLabels?: (
-    range: TimeRange,
-    dataLength: number
-  ) => (string | number)[];
+export interface ImageChartData extends BaseChartData {
+  dataType: "image";
+  imagePath: string; // Path to PNG/JPG image
+  width?: number;
+  height?: number;
 }
+
+export type ChartData = GraphChartData | ImageChartData;
