@@ -12,13 +12,14 @@ import StartSessionButton from "./StartSessionButton";
 import CircleScore from "@/components/Analytics/CircleScore";
 import { useSession } from "@/hooks/useSession";
 import StartSessionCard from "./StartSessionCard";
+import NotificationTestButton from "../Notifications/NotificationTestButton";
 
 export default function HomePage() {
   const { sessionState, isLoading, error, toggleSession, handleConfigChange } =
     useSession();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-8">
+    <div className="min-h-screen bg-gray-50 py-12 px-8 w-full">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-12">
@@ -118,6 +119,7 @@ export default function HomePage() {
           </div>
         )}
       </div>
+      <NotificationTestButton />
     </div>
   );
 }

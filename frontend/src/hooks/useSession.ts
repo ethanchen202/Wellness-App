@@ -70,7 +70,7 @@ export const useSession = () => {
       }
 
       // Stop session on backend
-      await SessionService.stopSession(sessionIdRef.current);
+      await SessionService.stopSession();
 
       // Disconnect WebSocket
       if (wsRef.current) {
