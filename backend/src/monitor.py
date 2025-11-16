@@ -125,7 +125,7 @@ async def run_combined_monitor(recording_flag, posture_manager, blink_manager):
     cap.release()
 
 
-async def main_backend(recording_flag, posture_manager, blink_manager):
+async def main_backend(recording_flag, general_manager):
     print("combined monitor started")
 
     # ---- CAMERA SETUP ----
@@ -167,7 +167,7 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
     # Posture: "prolonged bad" = 60s of continuous bad posture
     POSTURE_PROLONGED_THRESHOLD_SEC = 2
 
-    # Blink: "prolonged low blink rate" = < 6 blinks/min for at least 60s
+    # Blink: "prolonged low blink rate" = < 8 blinks/min for at least 60s
     LOW_BLINK_RATE_THRESHOLD = 8          # blinks / minute
     LOW_BLINK_PROLONGED_THRESHOLD_SEC = 2
 
@@ -253,7 +253,7 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
                 posture_prolonged_active = True
 
                 # Send a single event when prolonged bad posture starts
-                await posture_manager.broadcast({
+                await general_manager.broadcast({
                     "type": "posture_warning",
                     "status": "prolonged_bad",
                     "bad_duration_sec": int(bad_duration),
@@ -266,7 +266,7 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
                 posture_bad_since = None
 
                 # Notify client that posture returned to non-prolonged state
-                await posture_manager.broadcast({
+                await general_manager.broadcast({
                     "type": "posture_resolved",
                     "status": "back_to_good_or_unknown",
                 })
@@ -286,7 +286,7 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
                         low_duration >= LOW_BLINK_PROLONGED_THRESHOLD_SEC):
                     low_blink_prolonged_active = True
 
-                    await blink_manager.broadcast({
+                    await general_manager.broadcast({
                         "type": "blink_warning",
                         "status": "prolonged_low_rate",
                         "blink_rate_per_min": blink_rate,
@@ -298,7 +298,7 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
                     low_blink_prolonged_active = False
                     low_blink_since = None
 
-                    await blink_manager.broadcast({
+                    await general_manager.broadcast({
                         "type": "blink_resolved",
                         "status": "back_to_normal",
                         "blink_rate_per_min": blink_rate,
@@ -311,7 +311,7 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
                 low_blink_prolonged_active = False
                 low_blink_since = None
 
-                await blink_manager.broadcast({
+                await general_manager.broadcast({
                     "type": "blink_resolved",
                     "status": "face_not_visible",
                 })

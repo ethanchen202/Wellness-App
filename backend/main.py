@@ -42,7 +42,6 @@ class ConnectionManager:
                 self.disconnect(connection)
 
 posture_manager = ConnectionManager()
-blink_manager = ConnectionManager()
 
 # ----------------- HTTP Endpoints -----------------
 @app.post("/start")
@@ -56,7 +55,7 @@ async def stop_recording():
     return {"status": "recording stopped"}
 
 # ----------------- WebSocket Endpoints -----------------
-@app.websocket("/current_posture")
+@app.websocket("/current_status")
 async def ws_posture(websocket: WebSocket):
     await posture_manager.connect(websocket)
     try:
@@ -66,21 +65,12 @@ async def ws_posture(websocket: WebSocket):
     except WebSocketDisconnect:
         posture_manager.disconnect(websocket)
 
-@app.websocket("/current_blink")
-async def ws_blink(websocket: WebSocket):
-    await blink_manager.connect(websocket)
-    try:
-        while True:
-            await asyncio.sleep(1)
-    except WebSocketDisconnect:
-        blink_manager.disconnect(websocket)
-
 # ----------------- Background posture/blink thread -----------------
 def start_posture_thread():
     def run():
         # This runs your new combined monitor forever in its own event loop
         asyncio.run(
-            main_backend(recording_flag, posture_manager, blink_manager)
+            main_backend(recording_flag, posture_manager)
             # run_combined_monitor(recording_flag, posture_manager, blink_manager)
         )
 
