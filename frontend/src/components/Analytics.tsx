@@ -6,6 +6,7 @@ import {
   eyeStrainMetrics,
   postureMetrics,
   distractionsMetrics,
+  sessionLogsMetrics,
 } from "@/data/analyticsData";
 import { Vibrate, FileClock } from "lucide-react";
 
@@ -32,7 +33,7 @@ export default function Analytics() {
           <AnalyticsCard
             title="Session Logs"
             icon={FileClock}
-            metrics={eyeStrainMetrics}
+            metrics={sessionLogsMetrics}
           />
         </div>
       </div>

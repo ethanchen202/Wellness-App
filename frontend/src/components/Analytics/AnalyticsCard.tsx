@@ -4,12 +4,14 @@ import { LucideIcon } from "lucide-react";
 import TimeRangeSelector from "@/components/cards/TimeRangeSelector";
 import LineChart from "@/components/charts/LineChart";
 import BarChart from "@/components/charts/BarChart";
-import CircleScore from "./CircleScore";
+import ChartImage from "@/components/charts/ChartImage";
+import CircleScore from "@/components/Analytics/CircleScore";
 import {
   TimeRange,
   AnalyticsMetric,
-  ChartType,
   ChartData,
+  GraphChartData,
+  ImageChartData,
 } from "@/types/analytics.types";
 
 interface AnalyticsCardProps {
@@ -50,6 +52,16 @@ const defaultGetXAxisLabels = (range: TimeRange, dataLength: number) => {
   }
 };
 
+// Type guard for graph charts
+function isGraphChart(chart: ChartData): chart is GraphChartData {
+  return chart.dataType === "graph";
+}
+
+// Type guard for image charts
+function isImageChart(chart: ChartData): chart is ImageChartData {
+  return chart.dataType === "image";
+}
+
 export default function AnalyticsCard({
   title,
   icon: Icon,
@@ -60,36 +72,56 @@ export default function AnalyticsCard({
   const currentData = metrics.data[selectedRange];
 
   const renderChart = (chart: ChartData) => {
-    const xAxisLabels = getXAxisLabels(selectedRange, chart.data.length);
+    // Handle image chart
+    if (isImageChart(chart)) {
+      return (
+        <ChartImage
+          key={chart.id}
+          title={chart.title}
+          imagePath={chart.imagePath}
+          width={chart.width}
+          height={chart.height}
+        />
+      );
+    }
 
-    if (chart.type === "line") {
-      return (
-        <LineChart
-          key={chart.id}
-          title={chart.title}
-          data={chart.data}
-          xAxisData={xAxisLabels}
-          yAxisLabel={chart.yAxisLabel}
-          height={140}
-          showGrid={chart.showGrid ?? true}
-          curveType={chart.curveType ?? "monotoneX"}
-          showPoints={chart.showPoints ?? true}
-        />
-      );
-    } else if (chart.type === "bar") {
-      return (
-        <BarChart
-          key={chart.id}
-          title={chart.title}
-          data={chart.data}
-          xAxisData={xAxisLabels}
-          yAxisLabel={chart.yAxisLabel}
-          height={140}
-          showGrid={chart.showGrid ?? false}
-          borderRadius={chart.borderRadius ?? 8}
-          colors={chart.colors ?? ["#7E86C4"]}
-        />
-      );
+    // Handle graph chart
+    if (isGraphChart(chart)) {
+      const xAxisLabels = getXAxisLabels(selectedRange, chart.data.length);
+
+      if (chart.type === "line") {
+        return (
+          <LineChart
+            key={chart.id}
+            title={chart.title}
+            data={chart.data}
+            xAxisData={xAxisLabels}
+            yAxisLabel={chart.yAxisLabel}
+            height={140}
+            showGrid={chart.showGrid ?? true}
+            curveType={chart.curveType ?? "monotoneX"}
+            showPoints={chart.showPoints ?? true}
+            showXAxisLabel={chart.showXAxisLabel ?? true}
+            showYAxisLabel={chart.showYAxisLabel ?? true}
+          />
+        );
+      } else if (chart.type === "bar") {
+        return (
+          <BarChart
+            key={chart.id}
+            title={chart.title}
+            data={chart.data}
+            xAxisData={xAxisLabels}
+            yAxisLabel={chart.yAxisLabel}
+            height={140}
+            showGrid={chart.showGrid ?? false}
+            borderRadius={chart.borderRadius ?? 8}
+            colors={chart.colors ?? ["#7E86C4"]}
+            showXAxisLabel={chart.showXAxisLabel ?? true}
+            showYAxisLabel={chart.showYAxisLabel ?? true}
+          />
+        );
+      }
     }
 
     return null;
