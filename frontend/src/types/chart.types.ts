@@ -15,4 +15,6 @@ export interface BaseChartProps {
   showLegend?: boolean;
   loading?: boolean;
   className?: string;
+  showXAxisLabel?: boolean;
+  showYAxisLabel?: boolean;
 }

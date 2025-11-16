@@ -1,7 +1,7 @@
 // components/Charts/LineChart.tsx
 import React from "react";
 import { LineChart as MuiLineChart } from "@mui/x-charts/LineChart";
-import { BaseChartProps } from "@/types/chart";
+import { BaseChartProps } from "@/types/chart.types";
 
 interface LineChartProps extends BaseChartProps {
   curveType?: "linear" | "monotoneX" | "natural" | "step";
@@ -16,7 +16,7 @@ export default function LineChart({
   yAxisLabel,
   xAxisData,
   width,
-  height = 280,
+  height = 100,
   showGrid = false,
   showLegend = false,
   loading = false,
@@ -24,17 +24,14 @@ export default function LineChart({
   showArea = false,
   showPoints = false,
   className = "",
+  showYAxisLabel = false,
 }: LineChartProps) {
   // Generate default x-axis data if not provided
   const defaultXAxis = xAxisData || data.map((_, idx) => idx + 1);
 
   return (
     <div className={`relative ${className}`}>
-      {title && (
-        <h3 className="text-[28px] font-semibold text-gray-900 mb-6">
-          {title}
-        </h3>
-      )}
+      {title && <h3 className="text-body-1 mb-6 mt-2">{title}</h3>}
 
       <MuiLineChart
         width={width}
@@ -66,7 +63,7 @@ export default function LineChart({
         ]}
         yAxis={[
           {
-            label: yAxisLabel,
+            label: showYAxisLabel ? yAxisLabel : undefined,
             labelStyle: {
               fill: "#5B63A8",
               fontSize: 14,
@@ -80,7 +77,7 @@ export default function LineChart({
         ]}
         hideLegend={!showLegend}
         grid={{ horizontal: showGrid, vertical: showGrid }}
-        margin={{ left: 0, right: 100, top: 0, bottom: 0 }}
+        margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
         loading={loading}
         skipAnimation={false}
         slotProps={{

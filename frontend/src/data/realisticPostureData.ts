@@ -1,5 +1,5 @@
 // data/realisticPostureData.ts
-import { PostureMetrics } from "@/types/posture";
+import { PostureMetrics } from "@/types/posture.types";
 
 /**
  * Realistic posture data that simulates actual user behavior:

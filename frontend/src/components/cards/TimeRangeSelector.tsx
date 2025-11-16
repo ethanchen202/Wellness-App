@@ -1,5 +1,5 @@
 import React from "react";
-import { TimeRange } from "@/types/posture";
+import { TimeRange } from "@/types/analytics.types";
 
 interface TimeRangeSelectorProps {
   selected: TimeRange;
@@ -18,17 +18,17 @@ export default function TimeRangeSelector({
   onChange,
 }: TimeRangeSelectorProps) {
   return (
-    <div className="flex items-center gap-2 bg-gray-100 rounded-full p-2 w-fit">
+    <div className="flex items-center gap-2 rounded-full w-fit p-1 border-[0.5px] border-gray-300">
       {ranges.map(({ value, label }) => (
         <button
           key={value}
           onClick={() => onChange(value)}
           className={`
-            px-8 py-3 rounded-full text-[20px] font-medium transition-all duration-200 cursor-pointer
+            px-5 rounded-full text-body-2 transition-all duration-200 cursor-pointer border-[1px]
             ${
               selected === value
-                ? "bg-white text-gray-900 shadow-sm"
-                : "text-gray-600 hover:text-gray-900 hover:bg-gray-200"
+                ? "bg-axial-100 text-gray-900 shadow-sm border-axial-400"
+                : "text-gray-600  hover:text-gray-900 hover:bg-gray-200 border-transparent"
             }
           `}
         >

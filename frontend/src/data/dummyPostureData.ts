@@ -1,5 +1,5 @@
 // data/dummyPostureData.ts
-import { PostureMetrics } from "@/types/posture";
+import { PostureMetrics } from "@/types/posture.types";
 
 export const dummyPostureMetrics: PostureMetrics = {
   // Day view - hourly data (12 data points for 24 hours)

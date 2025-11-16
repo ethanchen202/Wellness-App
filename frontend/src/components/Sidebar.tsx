@@ -28,7 +28,7 @@ export default function Sidebar({ items, currentIdx, onChange }: SidebarProps) {
             <div
               className={`w-full h-full flex items-center px-[38px] rounded-full transition-all duration-200 ${
                 isSelected
-                  ? "bg-[#FFFFFF80] shadow-sm"
+                  ? "bg-[#FFFFFF80] shadow-[0_0_90px_6px_var(--color-gray-200)] "
                   : "bg-transparent hover:bg-gray-100"
               }`}
             >

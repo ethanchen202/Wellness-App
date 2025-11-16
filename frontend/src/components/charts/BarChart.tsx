@@ -1,6 +1,6 @@
 import React from "react";
 import { BarChart as MuiBarChart } from "@mui/x-charts/BarChart";
-import { BaseChartProps } from "@/types/chart";
+import { BaseChartProps } from "@/types/chart.types";
 
 interface BarChartProps extends BaseChartProps {
   layout?: "vertical" | "horizontal";
@@ -16,7 +16,7 @@ export default function BarChart({
   yAxisLabel,
   xAxisData,
   width,
-  height = 280,
+  height = 100,
   showGrid = false,
   showLegend = false,
   loading = false,
@@ -25,16 +25,13 @@ export default function BarChart({
   borderRadius = 8,
   colors = ["#7E86C4"],
   className = "",
+  showYAxisLabel = false,
 }: BarChartProps) {
   const defaultXAxis = xAxisData || data.map((_, idx) => `Item ${idx + 1}`);
 
   return (
     <div className={`${className}`}>
-      {title && (
-        <h3 className="text-[28px] font-semibold text-gray-900 mb-6">
-          {title}
-        </h3>
-      )}
+      {title && <h3 className="text-body-1 mb-6 mt-2">{title}</h3>}
 
       <MuiBarChart
         width={width}
@@ -65,7 +62,7 @@ export default function BarChart({
         ]}
         yAxis={[
           {
-            label: yAxisLabel,
+            label: showYAxisLabel ? yAxisLabel : undefined,
             labelStyle: {
               fill: "#5B63A8",
               fontSize: 14,
@@ -80,7 +77,7 @@ export default function BarChart({
         layout={layout}
         hideLegend={!showLegend}
         grid={{ horizontal: showGrid, vertical: showGrid }}
-        margin={{ left: 0, right: 100, top: 0, bottom: 0 }}
+        margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
         loading={loading}
         skipAnimation={false}
         borderRadius={borderRadius}
