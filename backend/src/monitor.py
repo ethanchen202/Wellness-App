@@ -161,15 +161,15 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
     EAR_THRESHOLD = 0.23
     EAR_CONSEC_FRAMES = 2
     frame_counter = 0
-    blink_times = deque()  # timestamps of each detected blink (for last 60s)
+    blink_times = deque([time.time()] * 15)  # timestamps of each detected blink (for last 60s)
 
     # ---- PROLONGED STATE CONFIG ----
     # Posture: "prolonged bad" = 60s of continuous bad posture
-    POSTURE_PROLONGED_THRESHOLD_SEC = 60
+    POSTURE_PROLONGED_THRESHOLD_SEC = 2
 
     # Blink: "prolonged low blink rate" = < 6 blinks/min for at least 60s
     LOW_BLINK_RATE_THRESHOLD = 8          # blinks / minute
-    LOW_BLINK_PROLONGED_THRESHOLD_SEC = 60
+    LOW_BLINK_PROLONGED_THRESHOLD_SEC = 2
 
     # ---- PROLONGED STATE VARIABLES ----
     posture_bad_since = None
@@ -207,7 +207,7 @@ async def main_backend(recording_flag, posture_manager, blink_manager):
 
             bad_history.append(posture_score)
             avg_score = np.mean(bad_history)
-            current_posture = "bad" if avg_score > 0.5 else "good"
+            current_posture = "bad" if avg_score > 0.67 else "good"
         else:
             current_posture = "unknown"
 
