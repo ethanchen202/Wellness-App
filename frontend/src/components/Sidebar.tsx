@@ -13,8 +13,15 @@ export type SidebarProps = {
 
 export default function Sidebar({ items, currentIdx, onChange }: SidebarProps) {
   return (
-    <div className="w-[310px] gap-5 h-screen flex flex-col items-center bg-gradient-to-t from-[#FCFCFD] to-axial-100 p-4 rounded-tr-[30px]">
-      <div className="h-[200px]"></div>
+    <div className="w-[310px] gap-1 h-screen flex flex-col items-center bg-gradient-to-t from-[#FCFCFD] to-axial-100 p-4 rounded-tr-[30px]">
+      {/* <span className="text-quicksand text-axial-400">AXIAL</span> */}
+      <img
+        src={"./src/assets/logo2.png"}
+        alt="Logo"
+        className="h-12 w-auto mt-10"
+      />
+
+      <div className="h-[50px]"></div>
       {items.map((item, idx) => {
         const Icon = item.icon;
         const isSelected = idx === currentIdx;

@@ -43,7 +43,7 @@ function App() {
       <PersistentNotificationStack />
 
       {/* Dev only - remove in production */}
-      {process.env.NODE_ENV === "development" && <NotificationTestButton />}
+      {/* {process.env.NODE_ENV === "development" && <NotificationTestButton />} */}
     </div>
   );
 }
