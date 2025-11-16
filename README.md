@@ -1,42 +1,33 @@
-# POSTURE CHECKER
+# **Axial – Real-Time Posture & Focus Monitoring**
+Axial is a lightweight background desktop app that helps you maintain healthy posture and stay focused while working. Using your device’s webcam (processed locally), Axial continuously analyzes upper-body posture, blinking frequency, and signs of fatigue—then sends gentle reminders when you need them.
 
-I was a ghost, I was alone (hah)
-어두워진 앞길 속에 (hah)
-Given the throne, I didn't know how to believe
-I was the queen that I'm meant to be
-I lived two lives, tried to play both sides
-But I couldn't find my own place
-Called a problem child 'cause I got too wild
-But now that's how I'm getting paid 끝없이 on stage
-I'm done hidin', now I'm shinin' like I'm born to be
-We dreamin' hard, we came so far, now I'll believe
-We're goin' up, up, up, it's our moment
-You know together we're glowing
-Gonna be, gonna be golden
-Oh, up, up, up with our voices
-영원히 깨질 수 없는
-Gonna be, gonna be golden
-Oh, I'm done hidin', now I'm shinin' like I'm born to be
-Oh, our time, no fears, no lies
-That's who we're born to be
-Waited so long to break these walls down
-To wake up and feel like me
-Put these patterns all in the past now
-And finally live like the girl they all see
-No more hiding, I'll be shining like I'm born to be
-'Cause we are hunters, voices strong, and I know I'll believe
-We're goin' up, up, up, it's our moment
-You know together we're glowing
-Gonna be, gonna be golden
-Oh, up, up, up, with our voices
-영원히 깨질 수 없는
-Gonna be, gonna be golden
-Oh, I'm done hidin', now I'm shining like I'm born to be
-Oh, our time, no fears, no lies
-That's who we're born to be
-You know we're gonna be, gonna be golden
-We're gonna be, gonna be
-Born to be, born to be glowin'
-밝게 빛나는 우린
-You know that it's our time, no fears, no lies
-That's who we're born to be
+Axial is designed to be **private**, **efficient**, and **non-intrusive**, built for students, developers, and anyone working long hours at a computer.
+
+---
+
+## **Features**
+### **Real-Time Posture Detection**
+- Tracks head, shoulder, and spine alignment using MediaPipe Pose  
+- Computes slouch angle, head tilt, shoulder droop, and forward-lean metrics  
+- Detects **prolonged bad posture** across a sliding time window  
+- Sends notifications only when poor posture persists
+
+### **Blinking & Fatigue Monitoring**
+- Tracks blink frequency and blink irregularity  
+- Detects possible signs of eye strain or fatigue  
+- Optional reminders to look away from the screen or take a quick break
+
+### **Desktop App (Runs in Background)**
+- Minimal, modern UI  
+- Tray icon control (start/stop monitoring, sensitivity settings)  
+- Auto-start on boot (optional)
+
+### **Backend–Frontend Architecture**
+- **Backend:** Python + OpenCV + MediaPipe, running continuous inference  
+- **Frontend:** Electron/React (or your chosen UI) consuming updates via WebSocket  
+- Real-time streaming of posture/blink metrics to UI
+
+### **Privacy First**
+- **No frames are ever stored or uploaded**  
+- All vision inference happens locally on your machine  
+- App works entirely offline
